@@ -15,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
         String url = "data/code.html";
-        String out = "/out/production/images/";
+        String out = "images/";
         File input = new File(url);
         try {
 
@@ -24,9 +24,13 @@ public class Main {
             HashSet<String> sUrls = new HashSet<>();
             pictures.stream().forEach(e -> sUrls.add(e.attr("src")));
             int ii = 0;
+            Path outPath = Paths.get(out);
+            if (!Files.exists(outPath)){
+                Files.createDirectory(outPath);
+            }
             for (String sUrl : sUrls) {
 
-                Path path = Paths.get(System.getProperty("user.dir") + out + sUrl.substring(sUrl.lastIndexOf('/')+1));
+                Path path = Paths.get(out + sUrl.substring(sUrl.lastIndexOf('/')+1));
                 if(Files.exists(path)){
                     continue;
                 }
